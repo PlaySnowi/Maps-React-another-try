@@ -4,8 +4,23 @@ import './App.css';
 
 class App extends Component {
 
+  componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
+    if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+      if (isScriptLoadSucceed) {
+        this.initApp()
+      }
+      else this.props.onError()
+    }
+  }
+
+  componentDidMount () {
+    const { isScriptLoaded, isScriptLoadSucceed } = this.props
+    if (isScriptLoaded && isScriptLoadSucceed) {
+      this.initApp()
+    }
+  }
+
   state = {
-    mapIsReady: false,
     //these are the restaurant listings that will be shown to the user
     locations: [
       { title: 'Real Hamburgueria Portuguesa', location: {lat: 41.152565, lng: -8.620043}, category: 'Burger'} ,
@@ -30,11 +45,27 @@ class App extends Component {
    * and populate based on that markers position
    */
   populateInfoWindow = (marker, infowindow) => {
+    //create a "highlighted location" marker color for when the user selects a location
+    const highlightedIcon = this.makeMarkerIcon('FFFF24');
+
     //check to make sure the infowindow is not already opened on this marker
-    if (infowindow.marker != marker) {
+    if (infowindow.marker !== marker) {
+      const defaultIcon = marker.getIcon()
+      
+      if (infowindow.marker) {//if a previous marker was selected,
+        //return the index of that previous selected marker
+        const markerIndex = this.state.markers.findIndex(marker => marker.title === infowindow.marker.title)
+        //set the corresponding marker to the default icon
+        this.state.markers[markerIndex].setIcon(defaultIcon)
+      }
+
+      //create a "highlighted location" marker color for when the user selects a location
+      marker.setIcon(highlightedIcon);
+      
       infowindow.marker = marker;
       infowindow.setContent('<div>' + marker.title + '</div>');
       infowindow.open(this.map, marker);
+
       //make sure the marker property is cleared if the infowindow is closed
       infowindow.addListener('closeclick',function(){
         infowindow.marker = null;
@@ -42,20 +73,15 @@ class App extends Component {
     }
   }
 
-  componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
-    if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
-      if (isScriptLoadSucceed) {
-        this.initApp()
-      }
-      else this.props.onError()
-    }
-  }
-
-  componentDidMount () {
-    const { isScriptLoaded, isScriptLoadSucceed } = this.props
-    if (isScriptLoaded && isScriptLoadSucceed) {
-      this.initApp()
-    }
+  makeMarkerIcon(markerColor) {
+    const markerImage = new window.google.maps.MarkerImage(
+      'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2',
+      new window.google.maps.Size(21, 34),//This marker is 21 pixels wide by 34 pixels high
+      new window.google.maps.Point(0, 0),//The origin for this image is (0, 0)
+      new window.google.maps.Point(10, 34),//The anchor for this image is (10, 34)
+      new window.google.maps.Size(21,34)//scaledSize
+    );
+    return markerImage;
   }
 
   initApp() {
@@ -71,7 +97,7 @@ class App extends Component {
       });
       
       const bounds = new window.google.maps.LatLngBounds();
-      
+
       //the following group uses the location array to create an array of markers on initialize
       for (let i = 0; i < this.state.locations.length; i++) {
         //get the position from the location array
@@ -82,7 +108,8 @@ class App extends Component {
         const marker = new window.google.maps.Marker({
           map: this.map,
           position: position,
-          title: title
+          title: title,
+          icon: this.state.defaultIcon,
         });
 
         //push the marker to our array of markers  
