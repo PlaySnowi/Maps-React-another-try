@@ -20,15 +20,15 @@ class Aside extends Component {
     render() {
         return (
             <aside>
+                <HamburgerIcon
+                    handleClick={this.handleClick}
+                />
                 <Search
                     handleClick={this.handleClick}
                     menuVisibility={this.state.visible}
                     searchQuery={this.props.searchQuery}
                     updateQuery={this.props.updateQuery}
                     markers={this.props.markers}
-                />
-                <HamburgerIcon
-                    handleClick={this.handleClick}
                 />
             </aside>
         )

@@ -14,7 +14,7 @@
 }*/
 
 #map {
-  height: 100vh;
+  height: 95vh;
 }
 
 .info-content {
@@ -48,11 +48,13 @@
  
 #search.hide {
   transform: translate3d(-100vw, 0, 0);
+  display: none;
 }
  
 #search.show {
   transform: translate3d(0vw, 0, 0);
   overflow: hidden;
+  display: block;
 }
 
 .App-title {
@@ -85,11 +87,11 @@ li:hover {
 
 svg {
   width: 32px;
-  fill: blue;
+  fill: #96D9FF;
   height: 5vh;
 }
 
 svg:hover {
-  background-color: #96D9FF;
+  background-color: blue;
   cursor: pointer;
 }

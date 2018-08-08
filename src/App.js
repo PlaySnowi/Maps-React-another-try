@@ -204,7 +204,7 @@ class App extends Component {
             updateQuery={this.updateQuery}
             markers={this.state.markers}
           />
-          <div id="map"></div>
+          <main id="map"role="application" aria-label="location"></main>
         </div>
       )
   }
