@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import scriptLoader from 'react-async-script-loader';
+import Aside from './Aside';
 import './App.css';
 
 class App extends Component {
@@ -202,21 +203,11 @@ class App extends Component {
 
       return(
         <div className="App">
-          <aside className="App-aside">
-            <h1 className="App-title">Welcome to React</h1>
-            <input
-              type="text"
-              value={this.state.query}
-              onChange={(event) => this.updateQuery(event.target.value)}
-            />
-            <ul className="list">
-              {this.state.markers.filter(marker => marker.getVisible()).map((marker, i) => (
-                <li key={i}>
-                  {marker.title}
-                </li>
-              ))}
-            </ul>
-          </aside>
+          <Aside
+            searchQuery={this.state.query}
+            updateQuery={this.updateQuery}
+            markers={this.state.markers}
+          />
           <div id="map"></div>
         </div>
       )

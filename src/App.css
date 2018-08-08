@@ -2,7 +2,7 @@
   /*text-align: center;*/
 }
 
-.App-aside {
+/*.App-aside {
   background-color: #222;
   height: 150px;
   padding: 20px;
@@ -11,21 +11,7 @@
   width: 320px;
   position: fixed;
   z-index: 1000;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
+}*/
 
 #map {
   height: 100vh;
@@ -42,4 +28,68 @@ li:hover {
 .foursquare {
   max-width: 320px;
   min-width: 200px;
+}
+
+/* Search */
+
+#search {
+  width: 320px;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform .3s
+              cubic-bezier(0, .52, 0, 1);
+  overflow: scroll;
+  z-index: 1000;
+}
+ 
+#search.hide {
+  transform: translate3d(-100vw, 0, 0);
+}
+ 
+#search.show {
+  transform: translate3d(0vw, 0, 0);
+  overflow: hidden;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Hamburger Icon */
+
+.top-bar {
+  background-color: black;
+  height: 5vh;
+}
+
+#hamburger-icon {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9;
+}
+
+svg {
+  width: 32px;
+  fill: blue;
+  height: 5vh;
+}
+
+svg:hover {
+  background-color: #96D9FF;
+  cursor: pointer;
 }
