@@ -23,11 +23,11 @@ class App extends Component {
   state = {
     //these are the restaurant listings that will be shown to the user
     locations: [
-      { title: 'Real Hamburgueria Portuguesa', location: {lat: 41.152565, lng: -8.620043}, category: 'Burger'} ,
-      { title: 'Santo Burga', location: {lat: 41.197335, lng: -8.709368}, category: 'Burger' },
-      { title: 'Mendi', location: {lat: 41.160475, lng: -8.640309}, category: 'Indian' },
-      { title: 'Real Indiana', location: {lat: 41.159654, lng: -8.68377}, category: 'Indian' },
-      { title: 'Portarossa', location: {lat: 41.156569, lng: -8.676524}, category: 'Italian' }
+      { title: 'Real Hamburgueria Portuguesa', location: {lat: 41.152565, lng: -8.620043}, venueID: '5253f4e311d2c499d31ac389'} ,
+      { title: 'Santo Burga', location: {lat: 41.197335, lng: -8.709368}, venueID: '55e9dee4498e433f9e80c8a6' },
+      { title: 'Mendi', location: {lat: 41.160475, lng: -8.640309}, venueID: '4cd5c0de7da9a35daaa8ebb9' },
+      { title: 'Real Indiana', location: {lat: 41.159654, lng: -8.68377}, venueID: '5442c5b7498ef5d7f4bb079c' },
+      { title: 'Portarossa', location: {lat: 41.156569, lng: -8.676524}, venueID: '51c848f3498e89b9acc8a5da' }
     ],
     //create a new blank array for all the listing markers
     markers:[],
@@ -58,6 +58,7 @@ class App extends Component {
         //get the position from the location array
         let position = this.state.locations[i].location;
         let title = this.state.locations[i].title;
+        let venueID = this.state.locations[i].venueID;
         
         //create a marker per location, and put into markers array
         const marker = new window.google.maps.Marker({
@@ -65,6 +66,7 @@ class App extends Component {
           position: position,
           title: title,
           icon: this.state.defaultIcon,
+          venueID: venueID
         });
 
         //push the marker to our array of markers  
@@ -103,6 +105,37 @@ class App extends Component {
    * and populate based on that markers position
    */
   populateInfoWindow = (marker, infowindow) => {
+    const clientID = 'QXQJ2XVHGO02KDPNXEAFVKVNW2YFQK234E52ZEEIHOBUI42Z';
+    const clientSecret = 'MPEJQNHCMWXYHZ2DTRZEG2IQ4F2OPMYYNKYR2ADJWITBPQPC';
+    
+    fetch(`https://api.foursquare.com/v2/venues/${marker.venueID}?&client_id=${clientID}&client_secret=${clientSecret}&v=20180804`)
+      .then(response => response.json())
+      .then(addInfo)
+      .catch(e => requestError(e, 'info'));
+  
+    function addInfo(data) {
+      const venueName = data.response.venue.name;
+      const venueRating = data.response.venue.rating;
+      const venueLink = `${data.response.venue.canonicalUrl}?ref=${clientID}`;
+      
+      if (venueName) {
+        infowindow.setContent(
+          `<div class="info-content">
+              <a href="${venueLink}" target="_blank" class="venue-name">${venueName}</a><br>
+              Rating: ${venueRating}
+            </div>
+            <img src="powered-by-foursquare-blue.svg" alt="powered by foursquare" class="foursquare">`
+        )
+      } else {
+        infowindow.setContent('No info available');
+      }
+    }
+
+    function requestError(e, part) {
+      console.log(e);
+      infowindow.setContent(`Oh no! There was an error making a request for the ${part}.`);
+    }
+
     //create a "highlighted location" marker color for when the user selects a location
     const highlightedIcon = this.makeMarkerIcon('FFFF24');
 
@@ -121,7 +154,6 @@ class App extends Component {
       marker.setIcon(highlightedIcon);
       
       infowindow.marker = marker;
-      infowindow.setContent('<div>' + marker.title + '</div>');
       infowindow.open(this.map, marker);
 
       //make sure the marker property is cleared and the marker returns to default if the infowindow is closed

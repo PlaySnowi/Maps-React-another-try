@@ -30,3 +30,16 @@ li:hover {
 #map {
   height: 100vh;
 }
+
+.info-content {
+  font-size: 1.3em;
+}
+
+.venue-name {
+  font-weight: bold;
+}
+
+.foursquare {
+  max-width: 320px;
+  min-width: 200px;
+}
