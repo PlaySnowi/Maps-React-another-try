@@ -1,35 +1,3 @@
-.App {
-  /*text-align: center;*/
-}
-
-/*.App-aside {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-  height: 100vh;
-  width: 320px;
-  position: fixed;
-  z-index: 1000;
-}*/
-
-#map {
-  height: 95vh;
-}
-
-.info-content {
-  font-size: 1.3em;
-}
-
-.venue-name {
-  font-weight: bold;
-}
-
-.foursquare {
-  max-width: 320px;
-  min-width: 200px;
-}
-
 /* Search */
 
 #search {
@@ -94,4 +62,23 @@ svg {
 svg:hover {
   background-color: blue;
   cursor: pointer;
+}
+
+/* Map */
+
+#map {
+  height: 95vh;
+}
+
+.info-content {
+  font-size: 1.3em;
+}
+
+.venue-name {
+  font-weight: bold;
+}
+
+.foursquare {
+  max-width: 320px;
+  min-width: 200px;
 }
