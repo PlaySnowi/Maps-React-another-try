@@ -48,60 +48,56 @@ class App extends Component {
         mapTypeControl: false
       });
 
-      this.addMarkers()
-  }
-
-  addMarkers = () => {
-    this.setState({
-      infoWindow: new window.google.maps.InfoWindow()
-    });
-    
-    const bounds = new window.google.maps.LatLngBounds();
-
-    //the following group uses the location array to create an array of markers on initialize
-    for (let i = 0; i < this.state.locations.length; i++) {
-      //get the position from the location array
-      let position = this.state.locations[i].location;
-      let title = this.state.locations[i].title;
-      let venueID = this.state.locations[i].venueID;
+      this.setState({
+        infoWindow: new window.google.maps.InfoWindow()
+      });
       
-      //create a marker per location, and put into markers array
-      const marker = new window.google.maps.Marker({
-        map: this.map,
-        position: position,
-        title: title,
-        icon: this.state.defaultIcon,
-        venueID: venueID
-      });
-
-      //push the marker to our array of markers  
-      this.setState((state) => ({
-        markers: [...state.markers, marker]
-      }))
-
-      const theApp = this;
-
-      //create an onclick event to open an infowindow at each marker
-      marker.addListener('click', function() {
-        theApp.populateInfoWindow(marker, theApp.state.infoWindow);
-      });
-
-      bounds.extend(marker.position);
-    }
-    //extend the boundaries of the map for each marker
-    this.map.fitBounds(bounds);
-
-    //on clicking a list item, run openInfoWindow function
-    document.querySelector('.list').addEventListener('click', function(e) {
-      openInfoWindow(e)
-    })
+      const bounds = new window.google.maps.LatLngBounds();
   
-    const openInfoWindow = (e) => {
-      //returns the index of the marker that matches the clicked list item
-      const markerIndex = this.state.markers.findIndex(marker => marker.title === e.target.innerText)
-      //runs populateInfoWindow function for the matched marker
-      this.populateInfoWindow(this.state.markers[markerIndex], this.state.infoWindow)
-    }
+      //the following group uses the location array to create an array of markers on initialize
+      for (let i = 0; i < this.state.locations.length; i++) {
+        //get the position from the location array
+        let position = this.state.locations[i].location;
+        let title = this.state.locations[i].title;
+        let venueID = this.state.locations[i].venueID;
+        
+        //create a marker per location, and put into markers array
+        const marker = new window.google.maps.Marker({
+          map: this.map,
+          position: position,
+          title: title,
+          icon: this.state.defaultIcon,
+          venueID: venueID
+        });
+  
+        //push the marker to our array of markers  
+        this.setState((state) => ({
+          markers: [...state.markers, marker]
+        }))
+  
+        const theApp = this;
+  
+        //create an onclick event to open an infowindow at each marker
+        marker.addListener('click', function() {
+          theApp.populateInfoWindow(marker, theApp.state.infoWindow);
+        });
+  
+        bounds.extend(marker.position);
+      }
+      //extend the boundaries of the map for each marker
+      this.map.fitBounds(bounds);
+  
+      //on clicking a list item, run openInfoWindow function
+      document.querySelector('.list').addEventListener('click', function(e) {
+        openInfoWindow(e)
+      })
+    
+      const openInfoWindow = (e) => {
+        //returns the index of the marker that matches the clicked list item
+        const markerIndex = this.state.markers.findIndex(marker => marker.title === e.target.innerText)
+        //runs populateInfoWindow function for the matched marker
+        this.populateInfoWindow(this.state.markers[markerIndex], this.state.infoWindow)
+      }
   }
 
   /*
