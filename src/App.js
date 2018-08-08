@@ -30,6 +30,7 @@ class App extends Component{
     const { isScriptLoaded, isScriptLoadSucceed } = this.props
     if (isScriptLoaded && isScriptLoadSucceed) {
       this.initApp()
+      /*this.listClick()*/
     }
   }
 
@@ -58,7 +59,7 @@ class App extends Component{
           markers: state.markers.concat(marker)
         }))
 
-        const theApp = this
+        const theApp = this;
 
         marker.addListener('click', function() {
           theApp.populateInfoWindow(marker, infoWindow);
@@ -68,6 +69,15 @@ class App extends Component{
       }
       // Extend the boundaries of the map for each marker
       this.map.fitBounds(bounds);
+
+      document.querySelector('.list').addEventListener('click', function(e) {
+        openInfoWindow(e)
+      })
+    
+      const openInfoWindow = (e) => {
+        const markerIndex = this.state.markers.findIndex(marker => marker.title === e.target.innerText)
+        this.populateInfoWindow(this.state.markers[markerIndex], infoWindow)
+      }
   }
 
   populateInfoWindow = (marker, infowindow) => {
@@ -88,7 +98,7 @@ class App extends Component{
         <div className="App">
           <aside className="App-aside">
             <h1 className="App-title">Welcome to React</h1>
-            <ul>
+            <ul className="list">
               {this.state.markers.map((marker, i) => (
                 <li key={i}>
                   {marker.title}
