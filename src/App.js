@@ -88,6 +88,13 @@ class App extends Component{
         <div className="App">
           <aside className="App-aside">
             <h1 className="App-title">Welcome to React</h1>
+            <ul>
+              {this.state.markers.map((marker, i) => (
+                <li key={i}>
+                  {marker.title}
+                </li>
+              ))}
+            </ul>
           </aside>
           <div id="map"></div>
         </div>

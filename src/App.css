@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .App-aside {
@@ -15,6 +15,16 @@
 
 .App-title {
   font-size: 1.5em;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 #map {
