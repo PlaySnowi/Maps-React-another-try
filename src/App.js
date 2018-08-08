@@ -39,51 +39,6 @@ class App extends Component {
     this.setState({ query })
   }
 
-  /*
-   * This function populates the infowindow when the marker is clicked.
-   * We'll only allow one infowindow which will open at the marker that is clicked,
-   * and populate based on that markers position
-   */
-  populateInfoWindow = (marker, infowindow) => {
-    //create a "highlighted location" marker color for when the user selects a location
-    const highlightedIcon = this.makeMarkerIcon('FFFF24');
-
-    //check to make sure the infowindow is not already opened on this marker
-    if (infowindow.marker !== marker) {
-      const defaultIcon = marker.getIcon()
-      
-      if (infowindow.marker) {//if a previous marker was selected,
-        //return the index of that previous selected marker
-        const markerIndex = this.state.markers.findIndex(marker => marker.title === infowindow.marker.title)
-        //set the corresponding marker to the default icon
-        this.state.markers[markerIndex].setIcon(defaultIcon)
-      }
-
-      //create a "highlighted location" marker color for when the user selects a location
-      marker.setIcon(highlightedIcon);
-      
-      infowindow.marker = marker;
-      infowindow.setContent('<div>' + marker.title + '</div>');
-      infowindow.open(this.map, marker);
-
-      //make sure the marker property is cleared if the infowindow is closed
-      infowindow.addListener('closeclick',function(){
-        infowindow.marker = null;
-      });
-    }
-  }
-
-  makeMarkerIcon(markerColor) {
-    const markerImage = new window.google.maps.MarkerImage(
-      'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2',
-      new window.google.maps.Size(21, 34),//This marker is 21 pixels wide by 34 pixels high
-      new window.google.maps.Point(0, 0),//The origin for this image is (0, 0)
-      new window.google.maps.Point(10, 34),//The anchor for this image is (10, 34)
-      new window.google.maps.Size(21,34)//scaledSize
-    );
-    return markerImage;
-  }
-
   initApp() {
       //constructor creates a new map
       this.map = new window.google.maps.Map(document.getElementById('map'), {
@@ -140,6 +95,52 @@ class App extends Component {
         //runs populateInfoWindow function for the matched marker
         this.populateInfoWindow(this.state.markers[markerIndex], this.state.infoWindow)
       }
+  }
+
+  /*
+   * This function populates the infowindow when the marker is clicked.
+   * We'll only allow one infowindow which will open at the marker that is clicked,
+   * and populate based on that markers position
+   */
+  populateInfoWindow = (marker, infowindow) => {
+    //create a "highlighted location" marker color for when the user selects a location
+    const highlightedIcon = this.makeMarkerIcon('FFFF24');
+
+    //check to make sure the infowindow is not already opened on this marker
+    if (infowindow.marker !== marker) {
+      const defaultIcon = marker.getIcon()
+      
+      if (infowindow.marker) {//if a previous marker was selected,
+        //return the index of that previous selected marker
+        const markerIndex = this.state.markers.findIndex(marker => marker.title === infowindow.marker.title)
+        //set the corresponding marker to the default icon
+        this.state.markers[markerIndex].setIcon(defaultIcon)
+      }
+
+      //create a "highlighted location" marker color for when the user selects a location
+      marker.setIcon(highlightedIcon);
+      
+      infowindow.marker = marker;
+      infowindow.setContent('<div>' + marker.title + '</div>');
+      infowindow.open(this.map, marker);
+
+      //make sure the marker property is cleared and the marker returns to default if the infowindow is closed
+      infowindow.addListener('closeclick',function(){
+        infowindow.marker = null;
+        marker.setIcon(defaultIcon);
+      });
+    }
+  }
+
+  makeMarkerIcon(markerColor) {
+    const markerImage = new window.google.maps.MarkerImage(
+      'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2',
+      new window.google.maps.Size(21, 34),//This marker is 21 pixels wide by 34 pixels high
+      new window.google.maps.Point(0, 0),//The origin for this image is (0, 0)
+      new window.google.maps.Point(10, 34),//The anchor for this image is (10, 34)
+      new window.google.maps.Size(21,34)//scaledSize
+    );
+    return markerImage;
   }
 
   render(){
