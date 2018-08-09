@@ -2,26 +2,23 @@
 
 #search {
   width: 320px;
-  height: 100vh;
+  height: 100%;
   background-color: black;
   color: white;
   position: fixed;
   top: 0;
   left: 0;
-  transition: transform .3s
-              cubic-bezier(0, .52, 0, 1);
   overflow: scroll;
-  z-index: 1000;
+  z-index: 8;
 }
- 
+
 #search.hide {
-  transform: translate3d(-100vw, 0, 0);
+  transform: translate(-100vw, 0);
   display: none;
 }
  
 #search.show {
-  transform: translate3d(0vw, 0, 0);
-  overflow: hidden;
+  transform: translate(0, 0);
   display: block;
 }
 
@@ -29,12 +26,23 @@
   font-size: 1.5em;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+input {
+  min-height: 48px;
+  width: 300px;
+  font-size: 110%;
+  margin: 16px 7px;
 }
 
-li:hover {
+.restaurant {
+  display: block;
+  height: 48px;
+  margin: 16px;
+  font-size: 100%;
+  line-height: 48px;
+  width: 275px;
+}
+
+button:hover {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -51,6 +59,7 @@ li:hover {
   right: 0;
   top: 0;
   z-index: 9;
+  height: 5vh;
 }
 
 svg {
@@ -62,6 +71,12 @@ svg {
 svg:hover {
   background-color: blue;
   cursor: pointer;
+}
+
+/* Search and Hamburger Icon */
+button:focus {
+	color: red;
+  text-decoration: none;
 }
 
 /* Map */

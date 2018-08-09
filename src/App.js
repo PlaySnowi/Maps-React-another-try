@@ -70,7 +70,7 @@ class App extends Component {
           venueID: venueID
         });
   
-        //push the marker to our array of markers  
+        //push the markers to our array of markers  
         this.setState((state) => ({
           markers: [...state.markers, marker]
         }))

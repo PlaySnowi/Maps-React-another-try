@@ -3,9 +3,12 @@ import React, { Component } from 'react';
 class Search extends Component {
 
     render() {
+
+        //define the default class name for this <div> to 'hide'
         let visibility = 'hide';
         
-        if (this.props.menuVisibility) {
+        //if the aside state was changed to true (by clicking the hamburger icon),
+        if (this.props.menuVisibility) {//change the class name of this <div> to 'show'
             visibility = 'show';
         }
 
@@ -18,14 +21,14 @@ class Search extends Component {
                     value={this.props.searchQuery}
                     onChange={(event) => this.props.updateQuery(event.target.value)}
                 />
-                <ul className="list">
+                <div className="list">
                     {this.props.markers.filter(marker => marker.getVisible()).map((marker, i) => (
-                    <li key={i}>
+                    <button className="restaurant" key={i}>
                         {marker.title}
-                    </li>
+                    </button>
                     ))}
-                </ul>
-          </div>
+                </div>
+            </div>
         )
     }
 }
