@@ -10,6 +10,14 @@ This app includes a text input field that filters the map markers and list items
 
 Clicking a location on the list or a marker displays unique information about the location inside an infoWindow.
 
+## Quickstart
+
+To run this app you can download the zip or clone the directory to your computer.
+
+From inside the new directory:
+* install all project dependencies with `npm install`
+* start the development server with `npm start`
+
 ## APIs
 This app utilizes the [Google Maps API](https://developers.google.com/maps/documentation/javascript/tutorial) to show the map.
 
@@ -33,14 +41,6 @@ The service worker is only enabled in the production environment, e.g. the outpu
 If you need to test the offline-first service worker locally, build the application (using `npm run build`) and run a simple http server from the build directory. After running the build script, `create-react-app` will give instructions for one way to test the production build locally and the deployment instructions have instructions for using other methods. Be sure to always use an incognito window to avoid complications with the browser cache.
 
 If possible, configure the production environment to serve the generated `service-worker.js` with HTTP caching disabled. If that's not possible (GitHub Pages, for instance, does not allow you to change the default 10 minute HTTP cache lifetime) then be aware that if you visit the production site, and then revisit again before `service-worker.js` has expired from the HTTP cache, you'll continue to get the previously cached assets from the service worker. If you have an immediate need to view your updated production deployment, performing a shift-refresh will temporarily disable the service worker and retrieve all assets from the network.
-
-## Quickstart
-
-To run this app you can download the zip or clone the directory to your computer.
-
-From inside the new directory:
-* install all project dependencies with `npm install`
-* start the development server with `npm start`
 
 ## Create React App
 
