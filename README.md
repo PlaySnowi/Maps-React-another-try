@@ -36,9 +36,9 @@ By default, the production build is a fully functional, offline-first Progressiv
 
 Service workers require HTTPS, although to facilitate local testing, that policy does not apply to `localhost`. If the production web server does not support HTTPS, then the service worker registration will fail, but the rest of the app will remain functional.
 
-The service worker is only enabled in the production environment, e.g. the output of `npm run build`.
+The [service worker](https://github.com/PlaySnowi/Neighborhood-Map/blob/master/src/registerServiceWorker.js) is only enabled in the production environment, e.g. the output of `npm run build`.
 
-If you need to test the offline-first service worker locally, build the application (using `npm run build`) and run a simple http server from the build directory. After running the build script, `create-react-app` will give instructions for one way to test the production build locally and the deployment instructions have instructions for using other methods. Be sure to always use an incognito window to avoid complications with the browser cache.
+If you need to test the offline-first service worker locally, build the application (using `npm run build`) and run a simple http server from the build directory. After running the build script, `create-react-app` will give instructions for one way to test the production build locally. Be sure to always use an incognito window to avoid complications with the browser cache.
 
 If possible, configure the production environment to serve the generated `service-worker.js` with HTTP caching disabled. If that's not possible (GitHub Pages, for instance, does not allow you to change the default 10 minute HTTP cache lifetime) then be aware that if you visit the production site, and then revisit again before `service-worker.js` has expired from the HTTP cache, you'll continue to get the previously cached assets from the service worker. If you have an immediate need to view your updated production deployment, performing a shift-refresh will temporarily disable the service worker and retrieve all assets from the network.
 
