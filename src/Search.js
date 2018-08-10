@@ -22,9 +22,9 @@ class Search extends Component {
                     value={this.props.searchQuery}
                     onChange={(event) => this.props.updateQuery(event.target.value)}
                 />
-            <List
-                markers={this.props.markers}
-            />
+                <List
+                    markers={this.props.markers}
+                />
             </div>
         )
     }
