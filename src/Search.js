@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import List from './List.js';
 
 class Search extends Component {
 
@@ -21,13 +22,9 @@ class Search extends Component {
                     value={this.props.searchQuery}
                     onChange={(event) => this.props.updateQuery(event.target.value)}
                 />
-                <div className="list">
-                    {this.props.markers.filter(marker => marker.getVisible()).map((marker, i) => (
-                    <button className="restaurant" key={i}>
-                        {marker.title}
-                    </button>
-                    ))}
-                </div>
+            <List
+                markers={this.props.markers}
+            />
             </div>
         )
     }

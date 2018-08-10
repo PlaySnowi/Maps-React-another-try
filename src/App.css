@@ -1,3 +1,10 @@
+a:focus {
+  color: red;
+  text-decoration: none;
+  outline: 0;
+  box-shadow: 0 0 8px 3px red;
+}
+
 /* Search */
 
 #search {
@@ -32,6 +39,7 @@ input {
   font-size: 110%;
   margin: 16px 7px;
 }
+
 input:focus {
   color: red;
   text-decoration: none;
