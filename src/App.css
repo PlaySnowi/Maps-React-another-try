@@ -32,6 +32,12 @@ input {
   font-size: 110%;
   margin: 16px 7px;
 }
+input:focus {
+  color: red;
+  text-decoration: none;
+  outline: 0;
+  box-shadow: 0 0 8px 3px red;
+}
 
 .restaurant {
   display: block;
@@ -82,6 +88,8 @@ svg:hover {
 button:focus {
 	color: red;
   text-decoration: none;
+  outline: 0;
+  box-shadow: 0 0 8px 3px red;
 }
 
 /* Map */

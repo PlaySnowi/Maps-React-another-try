@@ -10,7 +10,9 @@ class App extends Component {
       if (isScriptLoadSucceed) {
         this.initApp()
       }
-      else this.props.onError()
+      else {
+        alert("Sorry, something went wrong! This page didn't load Google Maps correctly. See the JavaScript console for techical details and, please, refresh the page to try again."); 
+      }
     }
   }
 
@@ -125,12 +127,13 @@ class App extends Component {
       
       if (venueName) {
         infowindow.setContent(
-          `<div class="info-content">
+          `<div tabindex="0" class="info-content">
               <a href="${venueLink}" target="_blank" class="venue-name">${venueName}</a><br>
               Rating: ${venueRating}
             </div>
             <img src="powered-by-foursquare-blue.svg" alt="powered by foursquare" class="foursquare">`
         )
+        document.querySelector('.info-content').focus();
       } else {
         infowindow.setContent('No info available');
       }
