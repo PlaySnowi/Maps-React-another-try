@@ -11,7 +11,7 @@ class App extends Component {
         this.initApp()
       }
       else {
-        alert("Sorry, something went wrong! This page didn't load Google Maps correctly. See the JavaScript console for techical details and, please, refresh the page to try again."); 
+        document.getElementById('map').innerHTML = "Sorry, something went wrong! This page didn't load Google Maps correctly. See the JavaScript console for techical details and, please, refresh the page to try again."; 
       }
     }
   }
